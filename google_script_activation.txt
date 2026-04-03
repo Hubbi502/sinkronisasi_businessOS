@@ -1,0 +1,16 @@
+Cara mengaktifkannya di Google Sheets:
+
+Buka Spreadsheet Anda.
+Klik Extensions > Apps Script (jika belum terbuka).
+(PENTING) Copy seluruh isi file gas/sync_script.js yang baru ke dalam editor Apps Script Anda, lalu Save (ikon disket).
+Di bilah menu kiri Apps Script (ikon jam ⏱️), klik Triggers.
+Klik tombol biru "+ Add Trigger" (di pojok kanan bawah).
+Atur konfigurasi berikut:
+Choose which function to run: autoSyncOnEdit
+Choose which deployment should run: Head
+Select event source: From spreadsheet
+Select event type: On edit
+Klik Save.
+Akan muncul popup peringatan otorisasi Google (karena ini mengakses data eksternal). Pilih akun Google Anda > klik Advanced > klik Go to [Nama Script Anda] (unsafe) > Allow.
+Setelah trigger ini diaktifkan, setiap kali Anda mengubah sebuah sel/baris di sheet manapun (seperti Sales, Shipments, dll), script akan langsung menangkap data baris tersebut dan mengirimkannya ke database secara otomatis dalam hitungan detik!
+
