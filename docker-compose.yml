@@ -30,7 +30,6 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - DATABASE_URL=host=postgres user=postgres password=postgres dbname=sinkronisasi_db port=5432 sslmode=disable
       - REDIS_ADDR=redis:6379
     env_file:
       - .env
@@ -46,7 +45,6 @@ services:
     container_name: sync_worker
     command: [ "/app/worker_bin" ]
     environment:
-      - DATABASE_URL=host=postgres user=postgres password=postgres dbname=sinkronisasi_db port=5432 sslmode=disable
       - REDIS_ADDR=redis:6379
     env_file:
       - .env

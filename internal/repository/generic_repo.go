@@ -32,7 +32,7 @@ func (r *GenericRepository) GetByID(dest interface{}, id string) error {
 
 // GetAll returns all non-deleted entities. `dest` must be a pointer to a slice.
 func (r *GenericRepository) GetAll(dest interface{}) error {
-	return r.db.Where("is_deleted = ?", false).Order("created_at DESC").Find(dest).Error
+	return r.db.Where("\"isDeleted\" = ?", false).Order("\"createdAt\" DESC").Find(dest).Error
 }
 
 // Update performs a standard update on the entity.
@@ -43,7 +43,7 @@ func (r *GenericRepository) Update(entity interface{}) error {
 // SoftDelete marks an entity as deleted by setting is_deleted = true.
 func (r *GenericRepository) SoftDelete(model interface{}, id string) error {
 	return r.db.Model(model).Where("id = ?", id).Updates(map[string]interface{}{
-		"is_deleted": true,
+		"isDeleted": true,
 		"version":    gorm.Expr("version + 1"),
 	}).Error
 }
@@ -107,7 +107,7 @@ func (r *GenericRepository) UpsertSimple(model interface{}, id string, updates m
 // Returns the number of records deleted.
 func (r *GenericRepository) ReconcileDeletions(slicePtr interface{}, remoteIDs map[string]bool) int {
 	// Find all non-deleted records
-	r.db.Where("is_deleted = ?", false).Find(slicePtr)
+	r.db.Where("\"isDeleted\" = ?", false).Find(slicePtr)
 
 	// We need to iterate over the slice; use GORM's approach
 	type IDHolder struct {
@@ -116,7 +116,7 @@ func (r *GenericRepository) ReconcileDeletions(slicePtr interface{}, remoteIDs m
 
 	var localRecords []IDHolder
 	r.db.Model(slicePtr).
-		Where("is_deleted = ?", false).
+		Where("\"isDeleted\" = ?", false).
 		Select("id").
 		Find(&localRecords)
 
@@ -125,7 +125,7 @@ func (r *GenericRepository) ReconcileDeletions(slicePtr interface{}, remoteIDs m
 		if !remoteIDs[local.ID] {
 			r.db.Model(slicePtr).
 				Where("id = ?", local.ID).
-				Updates(map[string]interface{}{"is_deleted": true})
+				Updates(map[string]interface{}{"isDeleted": true})
 			deletedCount++
 		}
 	}

@@ -188,8 +188,8 @@ func buildTaskItemConfig() *EntityConfig {
 				"description":   strPtr(getCol(row, "DESCRIPTION")),
 				"status":        orDefault(getCol(row, "STATUS"), "todo"),
 				"priority":      orDefault(getCol(row, "PRIORITY"), "medium"),
-				"assignee_name": strPtr(getCol(row, "ASSIGNEE")),
-				"due_date":      parseTime(getCol(row, "DUE DATE")),
+				"assigneeName": strPtr(getCol(row, "ASSIGNEE")),
+				"dueDate":      parseTime(getCol(row, "DUE DATE")),
 			}
 			entity := &model.TaskItem{
 				ID: id, Title: orDefault(getCol(row, "TITLE"), "Untitled"),
@@ -223,14 +223,14 @@ func buildSalesOrderConfig() *EntityConfig {
 		ToUpdates: func(row map[string]string) (string, map[string]interface{}, interface{}) {
 			id := getCol(row, "ID")
 			updates := map[string]interface{}{
-				"order_number":    getCol(row, "ORDER #"),
+				"orderNumber":    getCol(row, "ORDER #"),
 				"client":          orDefault(getCol(row, "CLIENT"), "Unknown"),
 				"description":     strPtr(getCol(row, "DESCRIPTION")),
 				"amount":          parseFloat(getCol(row, "AMOUNT")),
 				"priority":        orDefault(getCol(row, "PRIORITY"), "medium"),
 				"status":          orDefault(getCol(row, "STATUS"), "pending"),
-				"created_by_name": strPtr(getCol(row, "CREATED BY")),
-				"image_url":       strPtr(getCol(row, "IMAGE PREVIEW")),
+				"createdByName": strPtr(getCol(row, "CREATED BY")),
+				"imageUrl":       strPtr(getCol(row, "IMAGE PREVIEW")),
 			}
 			entity := &model.SalesOrder{
 				ID: id, OrderNumber: orDefault(getCol(row, "ORDER #"), id),
@@ -265,15 +265,15 @@ func buildPurchaseRequestConfig() *EntityConfig {
 		ToUpdates: func(row map[string]string) (string, map[string]interface{}, interface{}) {
 			id := getCol(row, "ID")
 			updates := map[string]interface{}{
-				"request_number":  getCol(row, "REQUEST #"),
+				"requestNumber":  getCol(row, "REQUEST #"),
 				"category":        orDefault(getCol(row, "CATEGORY"), "Other"),
 				"supplier":        strPtr(getCol(row, "SUPPLIER")),
 				"description":     strPtr(getCol(row, "DESCRIPTION")),
 				"amount":          parseFloat(getCol(row, "AMOUNT")),
 				"priority":        orDefault(getCol(row, "PRIORITY"), "medium"),
 				"status":          orDefault(getCol(row, "STATUS"), "pending"),
-				"created_by_name": strPtr(getCol(row, "CREATED BY")),
-				"image_url":       strPtr(getCol(row, "IMAGE PREVIEW")),
+				"createdByName": strPtr(getCol(row, "CREATED BY")),
+				"imageUrl":       strPtr(getCol(row, "IMAGE PREVIEW")),
 			}
 			entity := &model.PurchaseRequest{
 				ID: id, RequestNumber: orDefault(getCol(row, "REQUEST #"), id),
@@ -312,23 +312,23 @@ func buildShipmentDetailConfig() *EntityConfig {
 		ToUpdates: func(row map[string]string) (string, map[string]interface{}, interface{}) {
 			id := getCol(row, "ID")
 			updates := map[string]interface{}{
-				"shipment_number": getCol(row, "SHIPMENT #"),
-				"deal_id":         strPtr(getCol(row, "DEAL ID")),
+				"shipmentNumber": getCol(row, "SHIPMENT #"),
+				"dealId":         strPtr(getCol(row, "DEAL ID")),
 				"status":          normalizeShipmentStatus(getCol(row, "STATUS")),
 				"buyer":           orDefault(getCol(row, "BUYER"), "Unknown"),
 				"supplier":        strPtr(getCol(row, "SUPPLIER")),
-				"is_blending":     parseBool(getCol(row, "IS BLENDING")),
-				"iup_op":          strPtr(getCol(row, "IUP OP")),
-				"vessel_name":     strPtr(getCol(row, "VESSEL NAME")),
-				"barge_name":      strPtr(getCol(row, "BARGE NAME")),
-				"loading_port":    strPtr(getCol(row, "LOADING PORT")),
-				"discharge_port":  strPtr(getCol(row, "DISCHARGE PORT")),
-				"quantity_loaded": floatPtr(getCol(row, "QTY LOADED (MT)")),
-				"bl_date":         parseTime(getCol(row, "BL DATE")),
+				"isBlending":     parseBool(getCol(row, "IS BLENDING")),
+				"iupOp":          strPtr(getCol(row, "IUP OP")),
+				"vesselName":     strPtr(getCol(row, "VESSEL NAME")),
+				"bargeName":      strPtr(getCol(row, "BARGE NAME")),
+				"loadingPort":    strPtr(getCol(row, "LOADING PORT")),
+				"dischargePort":  strPtr(getCol(row, "DISCHARGE PORT")),
+				"quantityLoaded": floatPtr(getCol(row, "QTY LOADED (MT)")),
+				"blDate":         parseTime(getCol(row, "BL DATE")),
 				"eta":             parseTime(getCol(row, "ETA")),
-				"sales_price":     floatPtr(getCol(row, "SALES PRICE")),
-				"margin_mt":       floatPtr(getCol(row, "MARGIN/MT")),
-				"pic_name":        strPtr(getCol(row, "PIC")),
+				"salesPrice":     floatPtr(getCol(row, "SALES PRICE")),
+				"marginMt":       floatPtr(getCol(row, "MARGIN/MT")),
+				"picName":        strPtr(getCol(row, "PIC")),
 				"type":            orDefault(getCol(row, "TYPE"), "export"),
 			}
 			entity := &model.ShipmentDetail{
@@ -375,19 +375,19 @@ func buildSourceSupplierConfig() *EntityConfig {
 			id := getCol(row, "ID")
 			updates := map[string]interface{}{
 				"name": orDefault(getCol(row, "NAME"), "Unknown"), "region": orDefault(getCol(row, "REGION"), "Unknown"),
-				"calorie_range": strPtr(getCol(row, "CALORIE RANGE")),
+				"calorieRange": strPtr(getCol(row, "CALORIE RANGE")),
 				"gar": floatPtr(getCol(row, "GAR")), "ts": floatPtr(getCol(row, "TS")),
 				"ash": floatPtr(getCol(row, "ASH")), "tm": floatPtr(getCol(row, "TM")),
-				"jetty_port": strPtr(getCol(row, "JETTY PORT")), "anchorage": strPtr(getCol(row, "ANCHORAGE")),
-				"stock_available": parseFloat(getCol(row, "STOCK AVAILABLE")),
-				"min_stock_alert": floatPtr(getCol(row, "MIN STOCK ALERT")),
-				"kyc_status": orDefault(getCol(row, "KYC STATUS"), "not_started"),
-				"psi_status": orDefault(getCol(row, "PSI STATUS"), "not_started"),
-				"fob_barge_only": parseBool(getCol(row, "FOB BARGE ONLY")),
-				"price_linked_index": strPtr(getCol(row, "PRICE LINKED INDEX")),
-				"fob_barge_price_usd": floatPtr(getCol(row, "FOB BARGE PRICE (USD)")),
-				"contract_type": strPtr(getCol(row, "CONTRACT TYPE")),
-				"pic_name": strPtr(getCol(row, "PIC")), "iup_number": strPtr(getCol(row, "IUP NUMBER")),
+				"jettyPort": strPtr(getCol(row, "JETTY PORT")), "anchorage": strPtr(getCol(row, "ANCHORAGE")),
+				"stockAvailable": parseFloat(getCol(row, "STOCK AVAILABLE")),
+				"minStockAlert": floatPtr(getCol(row, "MIN STOCK ALERT")),
+				"kycStatus": orDefault(getCol(row, "KYC STATUS"), "not_started"),
+				"psiStatus": orDefault(getCol(row, "PSI STATUS"), "not_started"),
+				"fobBargeOnly": parseBool(getCol(row, "FOB BARGE ONLY")),
+				"priceLinkedIndex": strPtr(getCol(row, "PRICE LINKED INDEX")),
+				"fobBargePriceUsd": floatPtr(getCol(row, "FOB BARGE PRICE (USD)")),
+				"contractType": strPtr(getCol(row, "CONTRACT TYPE")),
+				"picName": strPtr(getCol(row, "PIC")), "iupNumber": strPtr(getCol(row, "IUP NUMBER")),
 			}
 			entity := &model.SourceSupplier{
 				ID: id, Name: orDefault(getCol(row, "NAME"), "Unknown"), Region: orDefault(getCol(row, "REGION"), "Unknown"),
@@ -431,8 +431,8 @@ func buildQualityResultConfig() *EntityConfig {
 		ToUpdates: func(row map[string]string) (string, map[string]interface{}, interface{}) {
 			id := getCol(row, "ID")
 			updates := map[string]interface{}{
-				"cargo_id": orDefault(getCol(row, "CARGO ID"), id), "cargo_name": orDefault(getCol(row, "CARGO NAME"), "Unknown"),
-				"surveyor": strPtr(getCol(row, "SURVEYOR")), "sampling_date": parseTime(getCol(row, "SAMPLING DATE")),
+				"cargoId": orDefault(getCol(row, "CARGO ID"), id), "cargoName": orDefault(getCol(row, "CARGO NAME"), "Unknown"),
+				"surveyor": strPtr(getCol(row, "SURVEYOR")), "samplingDate": parseTime(getCol(row, "SAMPLING DATE")),
 				"gar": floatPtr(getCol(row, "GAR")), "ts": floatPtr(getCol(row, "TS")),
 				"ash": floatPtr(getCol(row, "ASH")), "tm": floatPtr(getCol(row, "TM")),
 				"status": orDefault(getCol(row, "STATUS"), "pending"),
@@ -515,10 +515,10 @@ func buildMeetingItemConfig() *EntityConfig {
 				"date": parseTime(getCol(row, "DATE")), "time": strPtr(getCol(row, "TIME")),
 				"location": strPtr(getCol(row, "LOCATION")), "status": orDefault(getCol(row, "STATUS"), "scheduled"),
 				"attendees": strPtr(getCol(row, "ATTENDEES")),
-				"voice_note_url": strPtr(getCol(row, "VOICE NOTE URL")),
-				"mom_content": strPtr(getCol(row, "MOM CONTENT")),
-				"ai_summary": strPtr(getCol(row, "AI SUMMARY")),
-				"created_by_name": strPtr(getCol(row, "CREATED BY")),
+				"voiceNoteUrl": strPtr(getCol(row, "VOICE NOTE URL")),
+				"momContent": strPtr(getCol(row, "MOM CONTENT")),
+				"aiSummary": strPtr(getCol(row, "AI SUMMARY")),
+				"createdByName": strPtr(getCol(row, "CREATED BY")),
 			}
 			entity := &model.MeetingItem{
 				ID: id, Title: orDefault(getCol(row, "TITLE"), "Untitled"),
@@ -561,12 +561,12 @@ func buildPLForecastConfig() *EntityConfig {
 			updates := map[string]interface{}{
 				"buyer": strPtr(orDefault(buyer, "Unknown")),
 				"quantity": parseFloat(getCol(row, "QUANTITY")),
-				"selling_price": parseFloat(getCol(row, "SELLING PRICE")),
-				"buying_price": parseFloat(getCol(row, "BUYING PRICE")),
-				"freight_cost": parseFloat(getCol(row, "FREIGHT COST")),
-				"other_cost": parseFloat(getCol(row, "OTHER COST")),
-				"gross_profit_mt": parseFloat(getCol(row, "GROSS PROFIT / MT")),
-				"total_gross_profit": parseFloat(getCol(row, "TOTAL GROSS PROFIT")),
+				"sellingPrice": parseFloat(getCol(row, "SELLING PRICE")),
+				"buyingPrice": parseFloat(getCol(row, "BUYING PRICE")),
+				"freightCost": parseFloat(getCol(row, "FREIGHT COST")),
+				"otherCost": parseFloat(getCol(row, "OTHER COST")),
+				"grossProfitMt": parseFloat(getCol(row, "GROSS PROFIT / MT")),
+				"totalGrossProfit": parseFloat(getCol(row, "TOTAL GROSS PROFIT")),
 			}
 			entity := &model.PLForecast{
 				ID: id, Buyer: strPtr(orDefault(buyer, "Unknown")),
@@ -605,18 +605,18 @@ func buildSalesDealConfig() *EntityConfig {
 				dealNum = fmt.Sprintf("DEAL-%s", id)
 			}
 			updates := map[string]interface{}{
-				"deal_number":   dealNum,
+				"dealNumber":   dealNum,
 				"status":        orDefault(getCol(row, "STATUS"), "confirmed"),
 				"buyer":         orDefault(getCol(row, "BUYER"), "Unknown"),
-				"buyer_country": strPtr(getCol(row, "COUNTRY")),
+				"buyerCountry": strPtr(getCol(row, "COUNTRY")),
 				"type":          orDefault(getCol(row, "TYPE"), "export"),
 				"quantity":      parseFloat(getCol(row, "QUANTITY (MT)")),
-				"price_per_mt":  floatPtr(getCol(row, "PRICE/MT")),
-				"total_value":   floatPtr(getCol(row, "TOTAL VALUE")),
-				"laycan_start":  parseTime(getCol(row, "LAYCAN START")),
-				"laycan_end":    parseTime(getCol(row, "LAYCAN END")),
-				"pic_name":      strPtr(getCol(row, "PIC")),
-				"vessel_name":   strPtr(getCol(row, "VESSEL")),
+				"pricePerMt":  floatPtr(getCol(row, "PRICE/MT")),
+				"totalValue":   floatPtr(getCol(row, "TOTAL VALUE")),
+				"laycanStart":  parseTime(getCol(row, "LAYCAN START")),
+				"laycanEnd":    parseTime(getCol(row, "LAYCAN END")),
+				"picName":      strPtr(getCol(row, "PIC")),
+				"vesselName":   strPtr(getCol(row, "VESSEL")),
 			}
 			entity := &model.SalesDeal{
 				ID: id, DealNumber: dealNum, Buyer: orDefault(getCol(row, "BUYER"), "Unknown"),
@@ -654,10 +654,10 @@ func buildPartnerConfig() *EntityConfig {
 			id := getCol(row, "ID")
 			updates := map[string]interface{}{
 				"name": orDefault(getCol(row, "NAME"), "Unknown"), "type": orDefault(getCol(row, "TYPE"), "buyer"),
-				"category": strPtr(getCol(row, "CATEGORY")), "contact_person": strPtr(getCol(row, "CONTACT PERSON")),
+				"category": strPtr(getCol(row, "CATEGORY")), "contactPerson": strPtr(getCol(row, "CONTACT PERSON")),
 				"phone": strPtr(getCol(row, "PHONE")), "email": strPtr(getCol(row, "EMAIL")),
 				"address": strPtr(getCol(row, "ADDRESS")), "city": strPtr(getCol(row, "CITY")),
-				"country": strPtr(getCol(row, "COUNTRY")), "tax_id": strPtr(getCol(row, "TAX ID")),
+				"country": strPtr(getCol(row, "COUNTRY")), "taxId": strPtr(getCol(row, "TAX ID")),
 				"status": orDefault(getCol(row, "STATUS"), "active"), "notes": strPtr(getCol(row, "NOTES")),
 			}
 			entity := &model.Partner{
@@ -695,12 +695,12 @@ func buildBlendingConfig() *EntityConfig {
 			id := getCol(row, "ID")
 			updates := map[string]interface{}{
 				"inputs":         orDefault(getCol(row, "INPUTS"), "[]"),
-				"total_quantity": parseFloat(getCol(row, "TOTAL QTY")),
-				"result_gar":     parseFloat(getCol(row, "RESULT GAR")),
-				"result_ts":      parseFloat(getCol(row, "RESULT TS")),
-				"result_ash":     parseFloat(getCol(row, "RESULT ASH")),
-				"result_tm":      parseFloat(getCol(row, "RESULT TM")),
-				"created_by":     orDefault(getCol(row, "CREATED BY"), "system"),
+				"totalQuantity": parseFloat(getCol(row, "TOTAL QTY")),
+				"resultGar":     parseFloat(getCol(row, "RESULT GAR")),
+				"resultTs":      parseFloat(getCol(row, "RESULT TS")),
+				"resultAsh":     parseFloat(getCol(row, "RESULT ASH")),
+				"resultTm":      parseFloat(getCol(row, "RESULT TM")),
+				"createdBy":     orDefault(getCol(row, "CREATED BY"), "system"),
 			}
 			entity := &model.BlendingSimulation{
 				ID: id, Inputs: orDefault(getCol(row, "INPUTS"), "[]"),

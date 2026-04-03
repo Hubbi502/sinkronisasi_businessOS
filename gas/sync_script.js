@@ -39,7 +39,7 @@ var SHEET_ENTITY_MAP = {
 function getConfig() {
     var props = PropertiesService.getScriptProperties();
     return {
-        backendUrl: props.getProperty('BACKEND_URL') || 'http://localhost:8080/api/webhook/sheet-sync',
+        backendUrl: (props.getProperty('BACKEND_URL') || 'http://localhost:8080') + '/api/webhook/sheet-sync',
         apiSecret: props.getProperty('API_SECRET') || ''
     };
 }
